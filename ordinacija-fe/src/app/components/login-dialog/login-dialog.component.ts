@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { AlertifyService } from 'src/app/services/alertify.service';
 import { DentistService } from 'src/app/services/dentist.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class LoginDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,
-    private dentistService: DentistService
+    private dentistService: DentistService,
+    private alertify: AlertifyService,
   ) {}
 
   ngOnInit() {
@@ -25,8 +27,12 @@ export class LoginDialogComponent implements OnInit {
 
   login() {
     if (this.form.valid) {
-      this.dentistService.login(this.form.controls['code'].value);
-      this.dialogRef.close();
+      this.dentistService.login(this.form.controls['code'].value).subscribe(
+        (data) => {
+          this.alertify.success("Logged in successfully");
+          this.dialogRef.close();
+        }
+      );
     }
   }
 
