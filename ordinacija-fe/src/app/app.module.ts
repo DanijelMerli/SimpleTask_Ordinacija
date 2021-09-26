@@ -13,12 +13,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 /* Components */
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { AppErrorHandler } from './app-error-handler';
+import { NewReservationComponent } from './components/new-reservation/new-reservation.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,7 @@ import { AppErrorHandler } from './app-error-handler';
     HomeComponent,
     NavbarComponent,
     LoginDialogComponent,
+    NewReservationComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +46,9 @@ import { AppErrorHandler } from './app-error-handler';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
   ],
   providers: [{ provide: ErrorHandler, useClass: AppErrorHandler }],
   bootstrap: [AppComponent],
