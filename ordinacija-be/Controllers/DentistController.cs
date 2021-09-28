@@ -3,6 +3,8 @@ using ordinacija_be.Data;
 using ordinacija_be.DTOs;
 using ordinacija_be.Models;
 using ordinacija_be.Security;
+using System.Net;
+using System.Net.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,7 +30,7 @@ namespace ordinacija_be.Controllers
 
             if(dentist == null)
             {
-                return Unauthorized("Incorrect code");
+                return Unauthorized("Failed to login: Incorrect code");
             }
 
             string token = _tokenGenerator.GenerateTokenString(dentist);

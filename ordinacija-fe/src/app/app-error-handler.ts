@@ -8,6 +8,6 @@ export class AppErrorHandler implements ErrorHandler {
   constructor(private alertify: AlertifyService) {}
 
   handleError(error: Error): void {
-    this.alertify.error(error.message);
+    this.alertify.error(error.error);
   }
 }
