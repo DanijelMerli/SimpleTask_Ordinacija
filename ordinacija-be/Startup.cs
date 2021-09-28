@@ -64,7 +64,7 @@ namespace ordinacija_be
                 endpoints.MapControllers();
             });
 
-            seeder.SeedDatabase();
+            //seeder.SeedDatabase();
         }
     }
 }
