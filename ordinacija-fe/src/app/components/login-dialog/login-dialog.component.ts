@@ -16,24 +16,24 @@ export class LoginDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,
     private alertify: AlertifyService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.form = new FormGroup({
-      code: new FormControl(undefined, [Validators.required]),
+      code: new FormControl(undefined, Validators.required),
     });
   }
 
   login() {
     if (this.form.valid) {
-      this.authService.logIn(this.form.controls['code'].value).subscribe(
-        (data) => {
+      this.authService
+        .logIn(this.form.controls['code'].value)
+        .subscribe((data) => {
           this.authService.storeToken(data.token);
-          this.alertify.success("Logged in successfully");
+          this.alertify.success('Logged in successfully');
           this.dialogRef.close();
-        }
-      );
+        });
     }
   }
 
