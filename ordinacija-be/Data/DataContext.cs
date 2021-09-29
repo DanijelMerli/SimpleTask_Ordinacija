@@ -19,6 +19,7 @@ namespace ordinacija_be.Data
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
 
+        public DbSet<Appointment> Appointments { get; set; }
         private DbSet<Dentist> Dentists { get; set; }
         // problem - weird implementation for single dentist in database
         public Dentist Dentist 

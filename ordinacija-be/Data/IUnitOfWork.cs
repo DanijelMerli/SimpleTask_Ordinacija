@@ -5,6 +5,7 @@ namespace ordinacija_be.Data
     public interface IUnitOfWork
     {
         IAuthRepository AuthRepository { get; }
+        IAppointmentRepository AppointmentRepository { get; }
         void SaveChanges();
     }
 }

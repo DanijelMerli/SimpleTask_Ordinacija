@@ -21,7 +21,7 @@ namespace ordinacija_be.Data
         {
             IHashGenerator hashGenerator = new HMACSHA512Generator();
             byte[] hash, salt;
-            hashGenerator.GenerateHash("asd", out hash, out salt);
+            hashGenerator.GenerateHash("123", out hash, out salt);
 
             Dentist dentist = new Dentist()
             {

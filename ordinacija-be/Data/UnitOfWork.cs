@@ -13,12 +13,13 @@ namespace ordinacija_be.Data
         private readonly DataContext _context;
 
         private AuthRepository _authRepository;
+        private AppointmentRepository appointmentRepository;
 
         public UnitOfWork(DataContext context)
         {
             _context = context;
         }
-        
+
         public IAuthRepository AuthRepository
         {
             get
@@ -29,6 +30,19 @@ namespace ordinacija_be.Data
                 }
 
                 return _authRepository;
+            }
+        }
+
+        public IAppointmentRepository AppointmentRepository
+        {
+            get
+            {
+                if (appointmentRepository == null)
+                {
+                    appointmentRepository = new AppointmentRepository(_context);
+                }
+
+                return appointmentRepository;
             }
         }
 

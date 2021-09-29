@@ -6,8 +6,6 @@ using ordinacija_be.Security;
 using System.Net;
 using System.Net.Http;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace ordinacija_be.Controllers
 {
     [Route("api/[controller]")]
