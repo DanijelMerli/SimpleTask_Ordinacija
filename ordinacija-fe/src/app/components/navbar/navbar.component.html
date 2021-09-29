@@ -2,5 +2,12 @@
     <a class="navbar-brand" href="#">
       <img src="assets/logo.png" height="30">
     </a>
-    <button mat-stroked-button color="primary" (click)="openLogin()">Log in</button>
+    <div *ngIf="loggedIn(); else loggedOut">
+      <button mat-stroked-button color="primary" (click)="logOut()">Log out</button>
+    </div>
+    <ng-template #loggedOut>
+      <div>
+        <button mat-stroked-button color="primary" (click)="openLogin()">Log in</button>
+      </div>
+    </ng-template>
 </nav>

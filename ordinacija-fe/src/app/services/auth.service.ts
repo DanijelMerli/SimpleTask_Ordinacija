@@ -7,13 +7,26 @@ import { DentistLoginDTO } from '../DTOs/dentist-login-dto';
 @Injectable({
   providedIn: 'root',
 })
-export class DentistService {
+export class AuthService {
   private apiUrl: string = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
-  login(code: string): Observable<any> {
+  logIn(code: string): Observable<any> {
     const dto = new DentistLoginDTO(code);
     return this.http.post<any>(this.apiUrl + 'Dentist/Login/', dto);
+  }
+
+  logOut() {
+    localStorage.removeItem(environment.tokenString);
+  }
+
+  loggedIn(): boolean {
+    if (localStorage.getItem(environment.tokenString)) return true;
+    else return false;
+  }
+
+  storeToken(token: string) {
+    localStorage.setItem(environment.tokenString, token);
   }
 }
