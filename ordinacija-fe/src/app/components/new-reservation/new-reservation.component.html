@@ -1,46 +1,55 @@
-<h1>Make an appointment</h1>
-<form class="form" [formGroup]="appointmentForm">
-  <mat-form-field>
-    <mat-label>Appointment duration</mat-label>
-    <mat-select formControlName="duration" (selectionChange)="getAvailable()">
-      <mat-option value="60">60 minutes</mat-option>
-      <mat-option value="30">30 minutes</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Pick a date</mat-label>
-    <input
-      matInput
-      (focus)="picker.open()"
-      (dateInput)="getAvailable()"
-      [min]="todayDate"
-      [matDatepicker]="picker"
-      formControlName="date"
-      #dateInput
-    />
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Pick a time</mat-label>
-    <mat-select formControlName="time">
-      <mat-option *ngFor="let time of availableTimes" [value]="time.ticks">{{ time.toString() }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input matInput formControlName="email" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>JMBG</mat-label>
-    <input matInput formControlName="jmbg" />
-  </mat-form-field>
-  <button
-    mat-raised-button
-    color="primary"
-    [disabled]="!appointmentForm.valid"
-    (click)="send()"
-  >
-    Send
+<div class="container">
+  <h1>Make an appointment</h1>
+  <form class="form" [formGroup]="appointmentForm" #f="ngForm">
+    <mat-form-field>
+      <mat-label>Appointment duration</mat-label>
+      <mat-select formControlName="duration" (selectionChange)="getAvailable()">
+        <mat-option [value]="60">60 minutes</mat-option>
+        <mat-option [value]="30">30 minutes</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Pick a date</mat-label>
+      <input
+        matInput
+        (focus)="picker.open()"
+        (dateInput)="getAvailable()"
+        [min]="todayDate"
+        [matDatepicker]="picker"
+        [matDatepickerFilter]="weekendsDatesFilter"
+        formControlName="date"
+        #dateInput
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Pick a time</mat-label>
+      <mat-select #time formControlName="time">
+        <mat-option *ngFor="let time of availableTimes" [value]="time.ticks">{{
+          time.toString()
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>JMBG</mat-label>
+      <input matInput formControlName="jmbg" />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mb-2"
+      [disabled]="!appointmentForm.valid"
+      (click)="send(f)"
+    >
+      Send
+    </button>
+  </form>
+  <button mat-stroked-button color="primary" (click)="openAppointmentDialog()">
+    View existing appointment
   </button>
-</form>
+</div>

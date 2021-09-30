@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AppointmentCreateDto } from '../dtos/appointment-create-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,8 @@ export class AppointmentService {
 
   constructor(private http: HttpClient) {}
 
-  sendReservation(reservation): Observable<any> {
-    return this.http.post(this.apiUrl, reservation);
+  sendReservation(appointment: AppointmentCreateDto): Observable<any> {
+    return this.http.post(this.apiUrl + 'Appointment/Create/', appointment);
   }
 
   getAvailableHours(duration, date): Observable<any> {

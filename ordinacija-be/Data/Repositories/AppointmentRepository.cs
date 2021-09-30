@@ -1,4 +1,5 @@
-﻿using ordinacija_be.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ordinacija_be.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,14 @@ namespace ordinacija_be.Data.Repositories
             _context = context;
         }
 
-        // checks for taken appointments on selected day and returns free ones for selected duration
-        public IEnumerable<TimeSpan> GetAvailableTimes(TimeSpan duration, DateTime date)
+        public void AddAppointment(Appointment appointment)
+        {
+            // problem - if same time appointment is requested at the same time, both of them will be saved
+            _context.Add(appointment);
+        }
+
+        // checks for taken appointments on selected day and returns free ones for selected appointment duration
+        public IEnumerable<TimeSpan> GetAvailableHours(TimeSpan duration, DateTime date)
         {
             Dentist d = _context.Dentist;
             if (!_context.Dentist.Durations.Any(a => a.Duration == duration))
@@ -23,10 +30,17 @@ namespace ordinacija_be.Data.Repositories
                 throw new Exception("Invalid appointment duration");
             }
 
+            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                throw new Exception("Can't make appointments on weekends");
+            }
+
             List<Appointment> taken = _context.Appointments
                 .Where(a => a.DateAndTime.Date.Equals(date.Date))
+                .Include(a => a.Duration)
                 .ToList();
 
+            TimeSpan minDuration = _context.Dentist.Durations.Min(d => d.Duration);
             TimeSpan current = _context.Dentist.ShiftStart;
 
             if (date.Date.Equals(DateTime.Today))
@@ -39,14 +53,14 @@ namespace ordinacija_be.Data.Repositories
 
             List<TimeSpan> result = new List<TimeSpan>();
 
-            while (current < _context.Dentist.ShiftEnd)
+            while ((current + duration) <= _context.Dentist.ShiftEnd)
             {
-                if(!taken.Any(a => IsIntervening(a.DateAndTime.Date.TimeOfDay, a.Duration.Duration, current, duration)))
+                if(!taken.Any(a => IsIntervening(a.DateAndTime.TimeOfDay, a.Duration.Duration, current, duration)))
                 {
                     result.Add(new TimeSpan(current.Ticks));
                 }
 
-                current += duration;
+                current += minDuration;
             }
 
             return result;

@@ -7,7 +7,9 @@ namespace ordinacija_be.DTOs
 {
     public class AppointmentCreateDTO
     {
-        public DateTime DateAndTime { get; set; }
+        public int Duration { get; set; }
+        public string Date { get; set; }
+        public long Time { get; set; }
         public string Jmbg { get; set; }
         public string Email { get; set; }
     }

@@ -9,7 +9,6 @@ export class AppErrorHandler implements ErrorHandler {
   constructor(private alertify: AlertifyService) {}
 
   handleError(error: any): void {
-    console.log(error);
     if (error.error && typeof error.error == 'string') {
       this.alertify.error(error.error);
     } else {

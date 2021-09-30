@@ -23,6 +23,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { AppErrorHandler } from './app-error-handler';
 import { NewReservationComponent } from './components/new-reservation/new-reservation.component';
+import { AppointmentDialogComponent } from './components/appointment-dialog/appointment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NewReservationComponent } from './components/new-reservation/new-reserv
     NavbarComponent,
     LoginDialogComponent,
     NewReservationComponent,
+    AppointmentDialogComponent,
   ],
   imports: [
     BrowserModule,
