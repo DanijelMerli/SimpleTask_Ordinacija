@@ -18,11 +18,11 @@ namespace ordinacija_be.Data.Repositories
             _hashGenerator = hashGenerator;
         }
 
-        public Dentist Login(DentistLoginDTO dto)
+        public Dentist Login(string code)
         {
             Dentist dentist = _context.Dentist;
 
-            if(!_hashGenerator.VerifyHash(dto.Code, dentist.CodeHash, dentist.CodeSalt))
+            if(!_hashGenerator.VerifyHash(code, dentist.CodeHash, dentist.CodeSalt))
             {
                 return null;
             }

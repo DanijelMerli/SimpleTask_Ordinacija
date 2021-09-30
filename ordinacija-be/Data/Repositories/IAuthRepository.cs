@@ -9,6 +9,6 @@ namespace ordinacija_be.Data.Repositories
 {
     public interface IAuthRepository
     {
-        Dentist Login(DentistLoginDTO code);
+        Dentist Login(string code);
     }
 }

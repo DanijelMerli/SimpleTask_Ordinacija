@@ -24,7 +24,7 @@ namespace ordinacija_be.Controllers
         [HttpPost("Login")]
         public IActionResult Login([FromBody] DentistLoginDTO dto)
         {
-            Dentist dentist = _unitOfWork.AuthRepository.Login(dto);
+            Dentist dentist = _unitOfWork.AuthRepository.Login(dto.Code);
 
             if(dentist == null)
             {
