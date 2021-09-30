@@ -12,7 +12,7 @@ export class AppointmentService {
 
   constructor(private http: HttpClient) {}
 
-  sendReservation(appointment: AppointmentCreateDto): Observable<any> {
+  submitAppointment(appointment: AppointmentCreateDto): Observable<any> {
     return this.http.post(this.apiUrl + 'Appointment/Create/', appointment);
   }
 

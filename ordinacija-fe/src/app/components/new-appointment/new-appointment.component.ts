@@ -14,11 +14,11 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 import { AppointmentDialogComponent } from '../appointment-dialog/appointment-dialog.component';
 
 @Component({
-  selector: 'new-reservation',
-  templateUrl: './new-reservation.component.html',
-  styleUrls: ['./new-reservation.component.css'],
+  selector: 'new-appointment',
+  templateUrl: './new-appointment.component.html',
+  styleUrls: ['./new-appointment.component.css'],
 })
-export class NewReservationComponent implements OnInit {
+export class NewAppointmentComponent implements OnInit {
   appointmentForm: FormGroup;
   todayDate: Date = new Date();
   availableTimes: TimeSpanDto[] = [];
@@ -81,7 +81,7 @@ export class NewReservationComponent implements OnInit {
   }
 
   // passing FormGroupDirective because it's the only way to clear validation errors after submit
-  send(form: FormGroupDirective) {
+  submit(form: FormGroupDirective) {
     if (form.valid) {
       let formVal: AppointmentCreateDto = form.value;
 
@@ -93,7 +93,7 @@ export class NewReservationComponent implements OnInit {
         formVal.jmbg
       );
 
-      this.appointmentService.sendReservation(ap).subscribe((data) => {
+      this.appointmentService.submitAppointment(ap).subscribe((data) => {
         this.alertifyService.success("Appointment created");
         form.resetForm();
       });

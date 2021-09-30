@@ -1,1 +1,21 @@
-<p>appointment-dialog works!</p>
+<div>
+  <form class="form" [formGroup]="appointmentForm">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>JMBG</mat-label>
+      <input matInput formControlName="jmbg" />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mb-2"
+      [disabled]="!appointmentForm.valid"
+      (click)="submit()"
+    >
+      Send
+    </button>
+  </form>
+</div>
