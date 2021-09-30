@@ -27,6 +27,13 @@ namespace ordinacija_be.Data
             {
                 Name = "Danijel Merli",
                 Email = "danijel.merli@gmail.com",
+                ShiftStart = new TimeSpan(9, 0, 0),
+                ShiftEnd = new TimeSpan(17, 0, 0),
+                Durations = new List<AppointmentDuration>()
+                {
+                    new AppointmentDuration() { Duration = new TimeSpan(0, 30, 0)},
+                    new AppointmentDuration() { Duration = new TimeSpan(0, 60, 0)}
+                },
                 CodeHash = hash,
                 CodeSalt = salt
             };

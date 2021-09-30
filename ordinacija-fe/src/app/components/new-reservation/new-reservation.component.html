@@ -1,33 +1,44 @@
-<h1>Make a reservation</h1>
-<form class="form" [formGroup]="reservationForm">
+<h1>Make an appointment</h1>
+<form class="form" [formGroup]="appointmentForm">
   <mat-form-field>
     <mat-label>Appointment duration</mat-label>
-    <mat-select required formControlName="duration">
-      <mat-option value="hour">60 minutes</mat-option>
-      <mat-option value="half">30 minutes</mat-option>
+    <mat-select formControlName="duration" (selectionChange)="getAvailable()">
+      <mat-option value="60">60 minutes</mat-option>
+      <mat-option value="30">30 minutes</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Pick a date</mat-label>
     <input
-      required
       matInput
       (focus)="picker.open()"
+      (dateInput)="getAvailable()"
       [min]="todayDate"
       [matDatepicker]="picker"
       formControlName="date"
+      #dateInput
     />
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Pick a time</mat-label>
-    <mat-select required formControlName="time"> </mat-select>
+    <mat-select formControlName="time">
+      <mat-option *ngFor="let time of availableTimes" [value]="time.ticks">{{ time.toString() }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>JMBG</mat-label>
+    <input matInput formControlName="jmbg" />
   </mat-form-field>
   <button
     mat-raised-button
     color="primary"
-    [disabled]="!reservationForm.valid"
+    [disabled]="!appointmentForm.valid"
     (click)="send()"
   >
     Send

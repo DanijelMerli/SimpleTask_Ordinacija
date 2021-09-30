@@ -7,5 +7,6 @@ namespace ordinacija_be.Data.Repositories
 {
     public interface IAppointmentRepository
     {
+        IEnumerable<TimeSpan> GetAvailableTimes(TimeSpan duration, DateTime date);
     }
 }

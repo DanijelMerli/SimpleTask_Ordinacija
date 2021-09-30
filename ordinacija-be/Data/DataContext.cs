@@ -27,7 +27,7 @@ namespace ordinacija_be.Data
             get
             {
                 // returns last added dentist
-                return Dentists.OrderByDescending(d => d.Id).FirstOrDefault();
+                return Dentists.Include(d => d.Durations).OrderByDescending(d => d.Id).FirstOrDefault();
             }
             set
             {

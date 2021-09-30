@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ordinacija_be.Models
+namespace ordinacija_be.DTOs
 {
-    public class Appointment
+    public class AppointmentCreateDTO
     {
-        public int Id { get; set; }
         public DateTime DateAndTime { get; set; }
-        public AppointmentDuration Duration { get; set; }
         public string Jmbg { get; set; }
         public string Email { get; set; }
     }
