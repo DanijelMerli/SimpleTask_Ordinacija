@@ -1,6 +1,6 @@
-<div class="container">
+<div class="vertical-container">
   <h1>Make an appointment</h1>
-  <form class="form" [formGroup]="appointmentForm" #f="ngForm">
+  <form class="vertical-form" [formGroup]="appointmentForm" #f="ngForm">
     <mat-form-field>
       <mat-label>Appointment duration</mat-label>
       <mat-select formControlName="duration" (selectionChange)="getAvailable()">
@@ -49,7 +49,7 @@
       Submit
     </button>
   </form>
-  <button mat-stroked-button color="primary" (click)="openAppointmentDialog()">
+  <button mat-stroked-button color="primary" class="w-100" (click)="openAppointmentDialog()">
     View existing appointment
   </button>
 </div>

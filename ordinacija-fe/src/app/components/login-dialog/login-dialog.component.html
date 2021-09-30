@@ -1,17 +1,25 @@
-<h2 mat-dialog-title>Dentist Login</h2>
+<div class="vertical-container">
+  <h2 mat-dialog-title>Dentist Login</h2>
 
-<mat-dialog-content [formGroup]="form">
-  <mat-form-field>
-    <mat-label>Code</mat-label>
-    <input
-      matInput
-      formControlName="code"
-    />
-    <mat-error *ngIf="!form.valid">All fields are required</mat-error>
-  </mat-form-field>
-</mat-dialog-content>
+  <mat-dialog-content [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="code" />
+    </mat-form-field>
+  </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button class="mat-raised-button" (click)="close()">Close</button>
-  <button class="mat-raised-button mat-primary" [disabled]="!form.valid" (click)="login()">Log in</button>
-</mat-dialog-actions>
+  <div class="horizontal-container">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!form.valid"
+      class="w-100 mr-2"
+      (click)="login()"
+    >
+      Log in
+    </button>
+    <button mat-stroked-button color="primary" class="w-100" (click)="close()">
+      Cancel
+    </button>
+  </div>
+</div>

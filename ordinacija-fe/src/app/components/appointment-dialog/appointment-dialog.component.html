@@ -1,5 +1,6 @@
-<div>
-  <form class="form" [formGroup]="appointmentForm">
+<div class="vertical-container">
+  <h2 mat-dialog-title>View existing appointment</h2>
+  <form class="vertical-form" [formGroup]="appointmentForm">
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input matInput formControlName="email" />
@@ -8,14 +9,24 @@
       <mat-label>JMBG</mat-label>
       <input matInput formControlName="jmbg" />
     </mat-form-field>
-    <button
-      mat-raised-button
-      color="primary"
-      class="mb-2"
-      [disabled]="!appointmentForm.valid"
-      (click)="submit()"
-    >
-      Send
-    </button>
+    <div class="horizontal-container">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!appointmentForm.valid"
+          class="w-100 mr-2"
+          (click)="submit()"
+        >
+          Submit
+        </button>
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="close()"
+          class="w-100"
+        >
+          Cancel
+        </button>
+    </div>
   </form>
 </div>

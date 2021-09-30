@@ -5,3 +5,15 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.vartical-container, .vertical-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.horizontal-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
