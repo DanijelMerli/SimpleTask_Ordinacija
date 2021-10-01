@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AppointmentCreateDto } from 'src/app/dtos/appointment-create-dto';
-import { TimeSpanDto } from 'src/app/dtos/time-span-dto';
+import { TimeSpan } from 'src/app/entities/time-span';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { AppointmentDialogComponent } from '../appointment-dialog/appointment-dialog.component';
@@ -21,7 +21,7 @@ import { AppointmentDialogComponent } from '../appointment-dialog/appointment-di
 export class NewAppointmentComponent implements OnInit {
   appointmentForm: FormGroup;
   todayDate: Date = new Date();
-  availableTimes: TimeSpanDto[] = [];
+  availableTimes: TimeSpan[] = [];
   
   weekendsDatesFilter = (d: Date): boolean => {
       const day = d.getDay();
@@ -32,7 +32,7 @@ export class NewAppointmentComponent implements OnInit {
 
   constructor(
     private appointmentService: AppointmentService,
-    private alertifyService: AlertifyService,
+    private alertify: AlertifyService,
     private dialog: MatDialog
   ) {}
 
@@ -69,11 +69,12 @@ export class NewAppointmentComponent implements OnInit {
         .getAvailableHours(duration.value, new Date(date.value).toISOString())
         .subscribe((data) => {
           this.availableTimes = [];
-          data.forEach((t: TimeSpanDto) => {
+          data.forEach((t: TimeSpan) => {
             this.availableTimes.push(
-              new TimeSpanDto(t.hours, t.minutes, t.ticks)
+              new TimeSpan(t.hours, t.minutes, t.ticks)
             );
           });
+          time.enable();
         });
     } else {
       time.disable();
@@ -94,7 +95,7 @@ export class NewAppointmentComponent implements OnInit {
       );
 
       this.appointmentService.submitAppointment(ap).subscribe((data) => {
-        this.alertifyService.success("Appointment created");
+        this.alertify.success("Appointment created");
         form.resetForm();
       });
     }

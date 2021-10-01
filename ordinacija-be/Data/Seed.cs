@@ -34,6 +34,7 @@ namespace ordinacija_be.Data
                     new AppointmentDuration() { Duration = new TimeSpan(0, 30, 0)},
                     new AppointmentDuration() { Duration = new TimeSpan(0, 60, 0)}
                 },
+                MinTimeForCancel = new TimeSpan(24, 0, 0),
                 CodeHash = hash,
                 CodeSalt = salt
             };

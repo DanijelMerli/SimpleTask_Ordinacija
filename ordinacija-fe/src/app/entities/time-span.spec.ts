@@ -1,4 +1,4 @@
-import { TimeSpanDto } from './time-span-dto';
+import { TimeSpan } from './time-span';
 
 describe('TimeSpan', () => {
   it('should create an instance', () => {

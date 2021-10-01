@@ -1,15 +1,16 @@
 <div class="vertical-container">
   <h2 mat-dialog-title>View existing appointment</h2>
-  <form class="vertical-form" [formGroup]="appointmentForm">
-    <mat-form-field>
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="email" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>JMBG</mat-label>
-      <input matInput formControlName="jmbg" />
-    </mat-form-field>
-    <div class="horizontal-container">
+  <div class="vertical-container" *ngIf="!appointment; else appointmentDetails">
+    <form class="vertical-form" [formGroup]="appointmentForm">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>JMBG</mat-label>
+        <input matInput formControlName="jmbg" />
+      </mat-form-field>
+      <div class="horizontal-container">
         <button
           mat-raised-button
           color="primary"
@@ -27,6 +28,35 @@
         >
           Cancel
         </button>
+      </div>
+    </form>
+  </div>
+  <ng-template #appointmentDetails>
+    <div class="vertical-container">
+      <p>
+        You have an apointment on
+        <b>{{ appointment.dateStart | date: "EEEE, d MMMM yyyy" }}</b> from
+        <b>{{ appointment.dateStart | date: "H:mm" }}</b> to
+        <b>{{ appointment.dateEnd | date: "H:mm" }}</b>
+      </p>
     </div>
-  </form>
+    <div class="horizontal-container">
+      <button
+        mat-raised-button
+        color="warn"
+        class="w-100 mr-2"
+        (click)="cancelAppointment()"
+      >
+        Cancel Appointment
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="close()"
+        class="w-100"
+      >
+        Close
+      </button>
+    </div>
+  </ng-template>
 </div>

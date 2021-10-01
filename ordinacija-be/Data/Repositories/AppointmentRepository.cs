@@ -15,10 +15,43 @@ namespace ordinacija_be.Data.Repositories
             _context = context;
         }
 
+        public Appointment GetUserAppointment(string email, string jmbg)
+        {
+            return _context.Appointments
+                .Include(a => a.Duration)
+                .Where(a => a.Email == email && a.Jmbg == jmbg && a.DateAndTime > DateTime.Now)
+                .FirstOrDefault();
+        }
+
         public void AddAppointment(Appointment appointment)
         {
             // problem - if same time appointment is requested at the same time, both of them will be saved
             _context.Add(appointment);
+        }
+
+        public void CancelAppointment(int id)
+        {
+            Appointment appointment = _context.Appointments.Find(id);
+
+            if (appointment != null)
+            {
+                if ((appointment.DateAndTime - DateTime.Now) < _context.Dentist.MinTimeForCancel)
+                {
+                    throw new Exception(
+                        string.Format(
+                            "Appointment can't be canceled if it's scheduled to start in less than {0} hours",
+                            _context.Dentist.MinTimeForCancel.TotalHours
+                        ));
+                }
+                else
+                {
+                    _context.Remove(appointment);
+                }
+            }
+            else
+            {
+                throw new Exception($"Appointment with id {id} does not exist");
+            }
         }
 
         // checks for taken appointments on selected day and returns free ones for selected appointment duration
@@ -55,7 +88,7 @@ namespace ordinacija_be.Data.Repositories
 
             while ((current + duration) <= _context.Dentist.ShiftEnd)
             {
-                if(!taken.Any(a => IsIntervening(a.DateAndTime.TimeOfDay, a.Duration.Duration, current, duration)))
+                if (!taken.Any(a => IsIntervening(a.DateAndTime.TimeOfDay, a.Duration.Duration, current, duration)))
                 {
                     result.Add(new TimeSpan(current.Ticks));
                 }
@@ -69,6 +102,13 @@ namespace ordinacija_be.Data.Repositories
         private bool IsIntervening(TimeSpan t1, TimeSpan d1, TimeSpan t2, TimeSpan d2)
         {
             return t1 < t2.Add(d2) && t1.Add(d1) > t2;
+        }
+
+        public AppointmentDuration GetDurationInstance(int duration)
+        {
+            return _context.Dentist.Durations
+                .Where(d => d.Duration.TotalMinutes == duration)
+                .FirstOrDefault();
         }
     }
 }

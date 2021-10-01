@@ -1,4 +1,4 @@
-export class TimeSpanDto {
+export class TimeSpan {
   hours: number;
   minutes: number;
   ticks: number;

@@ -1,18 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { AppointmentService } from 'src/app/services/appointment.service';
+import { UserDataDto } from 'src/app/dtos/user-data-dto';
+import { AppointmentDetails } from 'src/app/entities/appointment-details';
+import { TimeSpan } from 'src/app/entities/time-span';
+import { AlertifyService } from 'src/app/services/alertify.service';
 
 @Component({
   selector: 'app-appointment-dialog',
   templateUrl: './appointment-dialog.component.html',
-  styleUrls: ['./appointment-dialog.component.css']
+  styleUrls: ['./appointment-dialog.component.css'],
 })
 export class AppointmentDialogComponent implements OnInit {
   appointmentForm: FormGroup;
-  
-  constructor() { }
+  appointment: AppointmentDetails;
+
+  constructor(
+    private appointmentService: AppointmentService,
+    private dialogRef: MatDialogRef<AppointmentDialogComponent>,
+    private alertify: AlertifyService
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
+    this.dialogRef.afterClosed().subscribe(() => this.afterClosed());
   }
 
   private initForm() {
@@ -28,8 +40,53 @@ export class AppointmentDialogComponent implements OnInit {
         Validators.maxLength(13),
         Validators.pattern('^[0-9]*$'), //consists only of digits
       ]),
-    }) 
+    });
   }
 
-  submit(){}
+  submit() {
+    if (this.appointmentForm.valid) {
+      this.appointmentService
+        .getAppointment(this.appointmentForm.value as UserDataDto)
+        .subscribe((data) => {
+          let dateStart = new Date(data.dateAndTime);
+          let dateEnd = new Date(
+            0,
+            0,
+            0,
+            dateStart.getHours() + data.duration.duration.hours,
+            dateStart.getMinutes() + data.duration.duration.minutes
+          );
+
+          this.appointment = new AppointmentDetails(
+            data.id,
+            dateStart,
+            dateEnd,
+            new TimeSpan(
+              data.duration.duration.hours,
+              data.duration.duration.minutes,
+              0
+            )
+          );
+        });
+    }
+  }
+
+  cancelAppointment() {
+    if (this.appointment) {
+      this.appointmentService
+        .cancelAppointment(this.appointment.id)
+        .subscribe(() => {
+          this.alertify.success("Appointment successfully cancelled");
+          this.close();
+        });
+    }
+  }
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  private afterClosed() {
+    this.appointment = undefined;
+  }
 }

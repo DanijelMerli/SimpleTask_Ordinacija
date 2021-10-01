@@ -10,7 +10,7 @@ namespace ordinacija_be.DTOs
         public int Duration { get; set; }
         public string Date { get; set; }
         public long Time { get; set; }
-        public string Jmbg { get; set; }
+        public string JMBG { get; set; }
         public string Email { get; set; }
     }
 }

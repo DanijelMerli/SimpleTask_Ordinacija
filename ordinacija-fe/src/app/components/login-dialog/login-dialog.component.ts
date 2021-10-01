@@ -21,7 +21,10 @@ export class LoginDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      code: new FormControl(undefined, Validators.required),
+      code: new FormControl(undefined, [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
     });
   }
 
